@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">Checkout</h1>
+            <form method="post" id="checkoutForm">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" name="name" id="id_name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_address" class="form-label">Address:</label>
+                    <textarea class="form-control" name="address" id="id_address" rows="4" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_phone_number" class="form-label">Phone Number:</label>
+                    <input type="tel" class="form-control" name="phone_number" id="id_phone_number" required>
+                </div>
+
+                <h2 class="col-md-12 mt-5 mb-4">Order Summary</h2>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_items %}
+                                <tr>
+                                    <td>{{ item.products.name }}</td>
+                                    <td>{{ item.product_quantity }}</td>
+                                    <td>₹{{ item.products.selling_price }}</td>
+                                    <td>₹{{ item.total_cost }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="3">Total Amount:</td>
+                                <!-- You can add the total cost here, adjust it based on your actual logic -->
+                                <td style="color:rgb(114, 10, 10); font-weight: bold;">₹{{ total_cart_price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="submit" class="btn  col-md-12 mt-3 mb-5" style="background-color:rgb(114, 10, 10);color: aliceblue;">Proceed to Billing</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

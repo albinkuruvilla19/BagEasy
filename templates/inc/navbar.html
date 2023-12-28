@@ -1,0 +1,96 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="https://bageasy.in/cdn/shop/files/shop-logo-center_1_165x@2x.png?v=1663577624"
+                 alt="Bootstrap" style="max-width: 165px; width: 736; height: 226;">
+        </a>
+        <form class="d-flex form-inline my-2 my-lg-0" method="get" action="{% url 'product_search' %}" style="max-width: 400px;">
+            {% csrf_token %}
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ request.GET.q }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="fa-solid fa-magnifying-glass" style="color: aliceblue; font-size: x-large;"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+        
+        <ul class="navbar-nav mb-2 mb-lg-0">
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <li class="nav-item" style="color: aliceblue; border-right: 1px solid white; padding-right: 10px;">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
+                            <i class="fa-solid fa-user"></i> Welcome, admin
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item" style="color: aliceblue; border-right: 1px solid white; padding-right: 10px;">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">
+                            <i class="fa-solid fa-user"></i> {{ request.user.username }}
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item" style="color: aliceblue; padding-left: 5px;">
+                    <a class="nav-link active" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item" style="color: aliceblue; padding-left: 5px;">
+                    <a class="nav-link active" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item" style="color: aliceblue;">
+                    <a class="nav-link active" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Shop
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'collections' %}">View all</a></li>
+                        <!-- Add more dropdown items as needed -->
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">My Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Contact Us</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    {% if not request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'cart' %}"><i class="fa-solid fa-cart"></i> My Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'order_history' %}"><i class="fa-solid fa-clipboard-list"></i> My Orders</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script src="https://kit.fontawesome.com/ca93357f03.js" crossorigin="anonymous"></script>

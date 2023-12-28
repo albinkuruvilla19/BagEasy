@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2 class="text-center">Products List</h2>
+  {% include "inc/message.html" %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a href="{% url 'addproduct' %}" class="btn btn-success float-right mt-3">Add New Products</a>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Seller</th>
+          <th>Quantity</th>
+          <th>Original Price</th>
+          <th>Selling Price</th>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Bestseller</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.seller }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.orginal_price }}</td>
+            <td>{{ product.selling_price }}</td>
+            <td>
+              {% if product.product_image %}
+                <img src="{{ product.product_image.url }}" alt="{{ product.name }} Image" width="100">
+              {% else %}
+                No Image
+              {% endif %}
+            </td>
+            <td>{{ product.status }}</td>
+            <td>{{ product.bestseller }}</td>
+            <td>
+              <a href="{% url 'editproduct' product.id %}" class="btn btn-primary">Edit</a>
+              <a href="{% url 'deleteproduct' product.id %}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

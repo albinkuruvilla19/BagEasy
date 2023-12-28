@@ -1,0 +1,21 @@
+
+
+html{
+    font-size: 16px;
+}
+
+
+.banner{
+    height:1400px; 
+    
+}
+
+.banner img{
+    height: 100%;
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+

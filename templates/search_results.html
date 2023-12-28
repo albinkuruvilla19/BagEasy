@@ -1,0 +1,15 @@
+<!-- search_results.html -->
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>Search Results</h1>
+    <!-- Display search results here -->
+    {% for product in products %}
+        <p>{{ product.name }}</p>
+        <!-- Add other product details as needed -->
+    {% endfor %}
+</div>
+{% endblock content %}

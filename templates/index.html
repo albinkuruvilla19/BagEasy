@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}BagEasy.in{% endblock title %}
+
+
+{% block content %}
+
+<style>
+    .card:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card-title {
+        transition: color 0.3s ease-in-out;
+    }
+
+    .card:hover .card-title {
+        color: rgb(114, 10, 10);
+    }
+
+    .btn-dark {
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .my-5 {
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        display: inline-block;
+    }
+
+    .view-all-link {
+        display: inline-block;
+        position: absolute;
+        right: 70px;
+        text-decoration: none;
+        color: #871e09;
+    }
+
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .card {
+        width: 13rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-body {
+        text-align: center;
+        height: 170px;
+    }
+
+    .card-text {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-dark {
+        margin-top: 15px;
+    }
+</style>
+
+
+<div class="banner">
+    <img src="https://bageasy.in/cdn/shop/files/bageasy_Post_767_x_850_px_84881149-cbba-4bfd-8a32-cf81c88d9bcf_767x.png?v=1669892599">
+</div>
+
+<section class="my-2">
+    <div class="container">
+        <div class="row">
+            <div class="my-4">
+                <div style="display: inline-block;"><h4>Collections</h4></div>
+                <div style="display: inline-block;position: absolute;right: 70px;"><a style="text-decoration: none;color: #871e09;" href="{% url 'collections' %}">View all</a></div>
+            </div>
+            {% for item in category %}
+            <div class="col-lg-2 col-md-3 mb-5">
+                <div class="card border-0" style="width: 13rem;">
+                    <img class="card-img-top img-fluid" src="{{item.image.url}}" alt="{{item.name}}">
+                    <div class="card-body">
+                      <a style="text-decoration: none;color: dimgray;" href="{% url 'collections' item.name %}"><h6 class="card-title text-center">{{item.name}} </h6></a>
+                      
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="my-2" style="background-color: #f0f0f0;">
+    <div class="container">
+        <div class="row" >
+            <div class="my-5">
+                <div style="display: inline-block;">
+                    <h4>Best Sellers</h4>
+                </div>
+                <div style="display: inline-block; position: absolute; right: 70px;">
+                    <a style="text-decoration: none; color: #871e09;" href="{% url 'collections' %}">View all</a>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for item in products %}
+                    <div class="col-lg-2 col-md-3 mb-5">
+                        <div class="card border-0">
+                            <img class="card-img-top img-fluid" src="{{item.product_image.url}}" alt="{{item.name}}" style="max-width: 400px; max-height: 300px; min-height: 300px;">
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <a style="text-decoration: none; color: dimgray;" href="{% url 'productsview' item.category item.name %}">
+                                    <p class="card-title text-center">{{item.name}}</p>
+                                </a>
+                                <p class="card-text">
+                                    <span style="color: rgb(114, 10, 10); font-size: 19px;">Rs. {{item.selling_price}}</span>
+                                    <span style="margin-left: 10px; color: gray;"><s>Rs. {{item.orginal_price}}</s></span>
+                                </p>
+                                <a href="{% url 'productsview' item.category item.name %}" class="btn btn-dark mt-auto mx-auto" style="margin-top: 15px;">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="my-2">
+  <div class="container">
+      <div class="row">
+          <div class="my-5">
+              <div style="display: inline-block;"><h4>All Products</h4></div>
+              <div style="display: inline-block;position: absolute;right: 70px;"><a style="text-decoration: none;color: #871e09;" href="{% url 'collections' %}">View all</a></div>
+          </div>
+          {% for item in allproducts %}
+            <div class="card-deck col-lg-2 col-md-3 mb-5">
+        <div class="card border-0 " style="width: 13rem;">
+            <img class="card-img-top img-fluid" src="{{item.product_image.url}}" alt="{{item.name}}" style="max-width: 400px; max-height: 300px; min-height:300px;">
+            <div class="card-body d-flex flex-column align-items-center">
+                <a style="text-decoration: none; color: dimgray;" href="{% url 'productsview' item.category item.name %}">
+                    <p class="card-title text-center">{{item.name}} </p>
+                </a>
+                <p class="card-text">
+                    <span style="color: rgb(114, 10, 10); font-size: 14px; font-weight: bold;">Rs. {{item.selling_price}}</span>
+                    <span style="margin-left: 10px; color: gray;"><s>Rs. {{item.orginal_price}}</s></span>
+                </p>
+                <a href="{% url 'productsview' item.category item.name %}" class="btn btn-dark mt-auto">Buy Now</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+      </div>
+  </div>
+</section>
+
+
+{% comment %} <section class="my-2">
+    <div class="container">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" style="margin: 5 5 5 5;">
+                <a href="{% url 'collections' %}"><img class="d-block w-100" src="{% static 'images/handbags.jpg' %}" alt="First slide"></a>
+              </div>
+            </div>
+          </div>
+    </div>
+    
+</section> {% endcomment %}
+
+{% comment %} <section class="my-2">
+    <div class="container" style="margin-top: 60px;">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <a href="{% url 'collections' %}"><img class="d-block w-100" src="{% static 'images/pearlbag.jpg' %}" alt="First slide"></a>
+              </div>
+            </div>
+          </div>
+    </div>
+    
+</section> {% endcomment %}
+
+
+
+{% endblock content %}
