@@ -23,8 +23,7 @@ urlpatterns = [
     path('removecart/<str:cid>', views.removecart, name='removecart'),
     path('checkout/', views.checkout, name='checkout'),
     path('order_history/',views.order_history, name='order_history'),
-    path('search/', views.product_search, name='product_search'),
-    
+    path('search/', views.product_search, name='product_search'), 
 ]
 
 
